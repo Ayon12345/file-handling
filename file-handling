@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+
+<?php
+$validateFirstName = "";
+$validateLastName = "";
+$EmailValidation = "";
+$GenderValidation = "";
+$UserNameorIDValidation= "";
+$PasswordValidation= "";
+$RecoveryEmailValidation= "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $name = $_REQUEST["fname"];
+    $email = $_REQUEST["email"];
+    $password = $_REQUEST["password"];
+    $validPassword="";
+
+    if (empty($fname)){
+        $validateFirstName = "you must enter your name";
+    } else {
+        $validateFirstName = "your name is " . $fname;
+    }
+
+    if (empty($lname)) {
+        $validateLastName = "you must enter your name";
+    } else {
+        $validateLastName = "your name is " . $lname;
+    }
+
+
+
+    if (empty($email))
+    {
+        $EmailValidation = "you must enter your email";
+    }
+   
+    else {
+        $EmailValidation = "your email is " . $email;
+    }
+    if(!isset($_REQUEST["gender"]))
+    {
+        $GenderValidation="select your gender";
+    }
+    else
+    {
+        $gender=$_REQUEST["gender"];;
+        $genderValidation="your gender is ".$gender;
+    }
+    if(empty($password))
+    {
+        $PasswordValidation="enter valid password";
+    }
+    
+    else
+    {
+        $validPassword="password correct";
+    }
+}
+?>
+
+<html>
+<form form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
+  <head>
+     <h1> Registration form</h1>
+  </head>  
+<body>
+<form>	
+    <fieldset>
+        <legend>Basic Information:</legend>
+    
+      
+     <table>		
+           <tr>		
+               	
+               <td>				
+                  Enter your firstname:			
+               </td>			
+                <td>				
+                   <input type="text" name="fname" style="width: 250px;"><?php echo $validateFirstName; ?>			
+                </td>		
+           </tr>
+
+
+
+           <tr>		
+               	
+                   <td>				
+                      Enter your lastname:			
+                   </td>			
+                    <td>				
+                       <input type="text" name="lname" style="width: 250px;"><?php echo $validateLastName; ?>			
+                    </td>		
+               </tr>
+
+            <tr>
+                 <td>				
+                   Gender:			
+                 </td>			
+                 <td>				
+                    <input type="radio" id="male" name="gender" value="male">	
+                    <label for="male">Male</label>
+                    <input type="radio" id="female" name="gender" value="female">
+                      <label for="female">Female</label><br>	
+                
+                        <?php echo $GenderValidation; ?>
+                 </td>		
+           </tr>
+           
+           <tr>			
+            <td>				
+                Email:			
+            </td>			
+             <td>				
+                <input type="email" name="email" style="width: 150px;"> <?php echo $EmailValidation; ?>		
+             </td>		
+        </tr>
+
+
+     </table>
+    </fieldset>
+
+
+
+    <fieldset>
+    <legend>Account Information</legend>
+
+     <table>
+
+        <tr>			
+            <td>				
+                User Name/User Id			
+            </td>			
+             <td>				
+                <input type="text" name="userId">	  <?php echo $UserNameorIDValidation; ?>		
+             </td>		
+        </tr>
+
+
+        <tr>			
+            <td>				
+                Password:			
+            </td>			
+             <td>				
+                <input type="password" name="password">	  <?php echo $PasswordValidation; ?>		
+             </td>		
+        </tr>
+
+
+        <tr>			
+            <td>				
+                Recovery email address:	  <?php echo $RecoveryEmailValidation; ?>		
+            </td>			
+             <td>				
+                <input type="email" name="recoverEmail">			
+             </td>		
+        </tr>
+
+
+        <table>
+
+    <tr>		
+         <button type="submit">Submit</button>	
+        <button type="submit" formaction="/action_page2.php" ></button> 		      	
+
+
+    </tr>
+
+
+</table>
+
+</form>
+
+    </table>
+</fieldset>
+
+<?php
+              
+if(isset($_POST['fname']))
+{
+$data=$_POST['fname'];
+$data=$_POST['lname'];
+
+$data=$_POST['email'];
+$data=$_POST['userId'];
+$data=$_POST['password'];
+$data=$_POST['recoverEmail'];
+$fp = fopen('data.txt', 'a');
+fwrite($fp, $data);
+fclose($fp);
+}
+?>
